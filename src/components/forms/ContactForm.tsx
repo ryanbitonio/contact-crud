@@ -11,6 +11,7 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { formSchema } from "@/lib/validations/contact-form";
 import { useForm } from "react-hook-form";
 import { Toaster } from "../ui/toaster";
 import { useToast } from "../ui/use-toast";
@@ -18,7 +19,8 @@ import { useToast } from "../ui/use-toast";
 function ContactForm() {
   const { toast } = useToast();
 
-  const form = useForm({
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
       middleName: "",
@@ -28,7 +30,7 @@ function ContactForm() {
     },
   });
 
-  const onSubmit = (e: any) => {
+  const onSubmit = (data: z.infer<typeof formSchema>, e: any) => {
     e.preventDefault();
 
     toast({
