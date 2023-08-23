@@ -1,5 +1,4 @@
 import { zodResolver } from "@hookform/resolvers/zod";
-import * as z from "zod";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -12,14 +11,24 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { formSchema } from "@/lib/validations/contact-form";
+import { Inputs } from "@/types/types";
 import { useForm } from "react-hook-form";
 import { Toaster } from "../ui/toaster";
 import { useToast } from "../ui/use-toast";
 
+import { addRow, editRow } from "@/lib/store";
+import { useDispatch } from "react-redux";
+import { useEffect, useRef } from "react";
+
 function ContactForm() {
+  const inputRef = useRef<HTMLInputElement>(null);
+
+  useEffect(() => inputRef.current?.focus(), []);
+
+  const dispatch = useDispatch();
   const { toast } = useToast();
 
-  const form = useForm<z.infer<typeof formSchema>>({
+  const form = useForm<Inputs>({
     resolver: zodResolver(formSchema),
     defaultValues: {
       firstName: "",
@@ -30,14 +39,14 @@ function ContactForm() {
     },
   });
 
-  const onSubmit = (data: z.infer<typeof formSchema>, e: any) => {
-    e.preventDefault();
-
+  const onSubmit = (data: Inputs) => {
     toast({
       title: "Successfully Added!",
       description: "You have added a new contact.",
       duration: 3000,
     });
+
+    dispatch(addRow(data));
 
     form.reset();
   };
@@ -56,7 +65,7 @@ function ContactForm() {
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(onSubmit)}
-          className="grid grid-cols-1 md:grid-cols-3 gap-3"
+          className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-4"
         >
           <FormField
             control={form.control}
@@ -70,6 +79,7 @@ function ContactForm() {
                     type="text"
                     placeholder="First Name"
                     {...field}
+                    ref={inputRef}
                   />
                 </FormControl>
                 <FormMessage />
