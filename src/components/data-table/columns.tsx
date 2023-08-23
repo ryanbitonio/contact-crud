@@ -1,5 +1,7 @@
+import { deleteRow, editRow } from "@/lib/store";
 import { DotsHorizontalIcon } from "@radix-ui/react-icons";
 import { ColumnDef } from "@tanstack/react-table";
+import { useDispatch } from "react-redux";
 import { Button } from "../ui/button";
 import { Checkbox } from "../ui/checkbox";
 import {
@@ -9,14 +11,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
-
-export type ContactTypes = {
-  id: string;
-  name: string;
-  mobile: number | string;
-  email: string;
-};
-
+import {
+  ContactTypes,
+  DataTableColumnHeader,
+} from "./data-table-columns-options";
 export const columns: ColumnDef<ContactTypes>[] = [
   {
     id: "select",
@@ -41,32 +39,54 @@ export const columns: ColumnDef<ContactTypes>[] = [
     enableHiding: false,
   },
   {
-    accessorKey: "name",
-    header: () => <div>Name</div>,
-    cell: ({ row }) => <div className="capitalize">{row.getValue("name")}</div>,
-  },
-  {
-    accessorKey: "mobile",
-    header: () => <div className="text-center">Mobile Number</div>,
+    accessorKey: "firstName",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="First Name" />
+    ),
     cell: ({ row }) => (
-      <div className="text-center">{row.getValue("mobile")}</div>
+      <div className="capitalize">{row.getValue("firstName")}</div>
     ),
   },
   {
+    accessorKey: "middleName",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Middle Name" />
+    ),
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("middleName")}</div>
+    ),
+  },
+  {
+    accessorKey: "lastName",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Last Name" />
+    ),
+    cell: ({ row }) => (
+      <div className="capitalize">{row.getValue("lastName")}</div>
+    ),
+  },
+  {
+    accessorKey: "mobileNumber",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Mobile Number" />
+    ),
+    cell: ({ row }) => <div>{row.getValue("mobileNumber")}</div>,
+  },
+  {
     accessorKey: "email",
-    header: () => <div className="text-right">Email Address</div>,
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Email Address" />
+    ),
     cell: ({ row }) => {
-      return (
-        <div className="text-right font-medium lowercase">
-          {row.getValue("email")}
-        </div>
-      );
+      return <div>{row.getValue("email")}</div>;
     },
   },
   {
     id: "actions",
     enableHiding: false,
-    cell: () => {
+    cell: ({ row }) => {
+      const dispatch = useDispatch();
+
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -76,8 +96,12 @@ export const columns: ColumnDef<ContactTypes>[] = [
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end">
             <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem>Edit</DropdownMenuItem>
-            <DropdownMenuItem>Delete</DropdownMenuItem>
+            <DropdownMenuItem onClick={() => dispatch(editRow(row.index))}>
+              Edit
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => dispatch(deleteRow(row.index))}>
+              Delete
+            </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       );
