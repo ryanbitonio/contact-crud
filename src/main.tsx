@@ -1,9 +1,10 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import Contact from "./components/pages/contact";
+import { RouterProvider } from "react-router-dom";
 import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import contactReducer from "./lib/store";
+import router from "./route/routes.js";
 
 const store = configureStore({
   reducer: {
@@ -14,7 +15,7 @@ const store = configureStore({
 ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <Provider store={store}>
-      <Contact />
+      <RouterProvider router={router} />
     </Provider>
   </React.StrictMode>
 );
