@@ -12,7 +12,12 @@ const Contact = () => {
   return (
     <div className="flex flex-col p-12 gap-5">
       <Button>
-        <Link to={`${import.meta.env.VITE_SERVER_API_URL}/auth/logout`}>
+        <Link
+          to={
+            `${import.meta.env.VITE_SERVER_API_URL}/auth/logout` ||
+            "http://localhost:3000/auth/logout"
+          }
+        >
           Logout
         </Link>
       </Button>
