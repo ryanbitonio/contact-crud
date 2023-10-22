@@ -5,23 +5,9 @@ import { columns } from "../data-table/columns";
 import { DataTable } from "../data-table/data-table";
 import ContactForm from "../forms/contact-form";
 import { Button } from "../ui/button";
-import { useEffect, useState } from "react";
-import axios from "axios";
 
 const Contact = () => {
   const data = useSelector((state: RootState) => state.contact);
-
-  // const [user, setUser] = useState(null);
-
-  const getUser = () => {
-    const url = `${import.meta.env.VITE_SERVER_API_URL}/auth/login/success`;
-    const { data } = axios.get(url, { withCredentials: true });
-    console.log("user data here: ", data);
-  };
-
-  useEffect(() => {
-    getUser();
-  }, []);
 
   return (
     <div className="flex flex-col p-12 gap-5">
