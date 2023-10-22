@@ -6,7 +6,10 @@ const Login = () => {
     <Button>
       <Link
         // target="_blank"
-        to={`${import.meta.env.VITE_SERVER_API_URL}/auth/google/callback`}
+        to={
+          "http://localhost:3000/auth/google/callback" ||
+          `${import.meta.env.VITE_SERVER_API_URL}/auth/google/callback`
+        }
       >
         Login
       </Link>
