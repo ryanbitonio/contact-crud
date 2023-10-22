@@ -7,8 +7,8 @@ const Login = () => {
       <Link
         // target="_blank"
         to={
-          "http://localhost:3000/auth/google/callback" ||
-          `${import.meta.env.VITE_SERVER_API_URL}/auth/google/callback`
+          import.meta.env.VITE_GOOGLE_CALLBACK ||
+          "http://localhost:3000/auth/google/callback"
         }
       >
         Login

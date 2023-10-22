@@ -14,8 +14,8 @@ const Contact = () => {
       <Button>
         <Link
           to={
-            "http://localhost:3000/auth/logout" ||
-            `${import.meta.env.VITE_SERVER_API_URL}/auth/logout`
+            import.meta.env.VITE_SERVER_LOGOUT_URL ||
+            "http://localhost:3000/auth/logout"
           }
         >
           Logout
