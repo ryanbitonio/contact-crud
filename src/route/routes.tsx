@@ -3,8 +3,8 @@ import Login from "@/components/pages/Login";
 import { createBrowserRouter } from "react-router-dom";
 
 const router = createBrowserRouter([
-  { path: "/login", element: <Login /> },
-  { path: "/", element: <Contact /> },
+  { path: "/", element: <Login /> },
+  { path: "/contact", element: <Contact /> },
 ]);
 
 export default router;

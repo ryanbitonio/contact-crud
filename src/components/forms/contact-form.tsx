@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { Toaster } from "../ui/toaster";
 import { useToast } from "../ui/use-toast";
 
-import { addRow, editRow } from "@/lib/store";
+import { addRow } from "@/lib/store";
 import { useDispatch } from "react-redux";
 import { useEffect, useRef } from "react";
 
